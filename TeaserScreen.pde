@@ -1,26 +1,29 @@
 WarmingGeometry wg;
 NoiseLines nls;
+shimashima ss;
 PFont f;
+
 void setup()
 {
   //pixelDensity(displayDensity());
   int font_size = displayHeight/10;
   PFont f = createFont("Jaldi-Bold.ttf", font_size);  
   textFont(f); // 読み込んだフォント f を表示用テキストフォントに変更
-  textLeading(font_size); 
+  textLeading(font_size);
 
   frameRate(10); // slower as possible
 
   wg = new WarmingGeometry(10, 40, 280);
   nls = new NoiseLines(12, 5);
+  ss = new shimashima(25);
 
-  //size(displayWidth, displayHeight, P2D);
+  //size(displayWidth, displayHeight);
   fullScreen(1); // number of display
 }
 
 String title = "";
-int kind_of_effect = 0;
-int size_of_effect = 2;
+int kind_of_effect = 2;
+int size_of_effect = 3;
 void draw()
 { 
   switch( kind_of_effect )
@@ -30,6 +33,9 @@ void draw()
     break;
   case 1:
     nls.draw();
+    break;
+  case 2:
+    ss.draw();
     break;
   }
 
