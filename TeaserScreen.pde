@@ -1,6 +1,6 @@
 WarmingGeometry wg;
 NoiseLines nls;
-shimashima ss;
+PastelStripes ps;
 PFont f;
 
 void setup()
@@ -15,7 +15,7 @@ void setup()
 
   wg = new WarmingGeometry(10, 40, 280);
   nls = new NoiseLines(12, 5);
-  ss = new shimashima(25);
+  ps = new PastelStripes(7);
 
   //size(displayWidth, displayHeight);
   fullScreen(1); // number of display
@@ -30,17 +30,20 @@ void draw()
   {
   case 0:
     wg.draw();
+    fill(100);
     break;
   case 1:
     nls.draw();
+    fill(100);
     break;
   case 2:
-    ss.draw();
+    ps.draw();
+    fill(240);
     break;
   }
 
 
-  fill(100);
+
   drawClock(width/2, height/4);
   // Draw Typed Message
   if ( title.length() > 0 ) {
@@ -55,18 +58,17 @@ void keyPressed()
   if (key == CODED) {  // UP, DOWN, LEFT, and RIGHT) as well as ALT, CONTROL, and SHIFT. 
     if (keyCode == UP || keyCode == RIGHT) {
       kind_of_effect++;
-      if( kind_of_effect >= size_of_effect ) kind_of_effect = 0;
+      if ( kind_of_effect >= size_of_effect ) kind_of_effect = 0;
     } else if (keyCode == DOWN || keyCode == LEFT) {
       kind_of_effect--;
-      if( kind_of_effect < 0 )kind_of_effect = size_of_effect-1; 
+      if ( kind_of_effect < 0 )kind_of_effect = size_of_effect-1;
     }
   } else { // BACKSPACE, TAB, ENTER, RETURN, ESC, and DELETE and other keys
     if ( key == BACKSPACE ) {
       if ( title.length() > 0 ) {
         title = title.substring(0, title.length()-1);
       }
-    } 
-    else {
+    } else {
       title = title + str(key);
     }
   }
