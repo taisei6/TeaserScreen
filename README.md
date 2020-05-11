@@ -8,7 +8,7 @@
 を設計指針として制作しています．effectを追加する場合は別途新規タブでeffectクラスを作成した後，TeaserScreen.pdeでsetup関数での初期化と，draw()関数内でのswitch分の追加を行ってください．
 
 ![teaser](images/WarmingGeometry.gif)
-![teaser](images/NoiseLInes.gif)
+![teaser](images/NoiseLines.gif)
 
 # Requirement
   * Processing(>3.0)
