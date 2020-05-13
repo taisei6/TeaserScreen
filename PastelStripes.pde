@@ -1,17 +1,17 @@
 class PastelStripe {
   PastelStripe() {
-    x = random(displayWidth);
+    x = random(width);
     w = (int)random(1,300);
     noise_param = random(1000.0);
     c = color_palette[(int)random(color_palette.length)];  
   }
   void draw()
   {
-    stroke(c, 100);
+    stroke(c,100);
     strokeWeight(w);
-    x = (displayWidth*noise(noise_param));
-    line(x, 0, x, displayHeight);
-    noise_param += 0.001;
+    x = (width*noise(noise_param));
+    line(x, 0, x, width);
+    noise_param += 0.0001;
   }
   float x;
   int w;
@@ -29,7 +29,7 @@ class PastelStripes {
   }
   void draw()
   {
-    background(#F28963);
+    background(#F2E4DC);
     for( int i = 0; i < ps.length; i++ ){
       ps[i].draw();
     }

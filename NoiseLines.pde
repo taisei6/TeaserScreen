@@ -15,12 +15,12 @@ class NoiseLine { //<>//
   float param_noise;
   void draw()
   {
-    float step = displayWidth/(float)number_of_vertex;
+    float step = width/(float)number_of_vertex;
     stroke(#3C88A6, noise(param_noise)*255);
     beginShape();
     for ( int i = 0; i <= number_of_vertex; i++ ) {
-      vertex(i*step, noise(param_noise)*displayHeight);
-      param_noise += 0.005;
+      vertex(i*step, noise(param_noise)*height);
+      param_noise += 0.001;
       println(i*step);
     }
 

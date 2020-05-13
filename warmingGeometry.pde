@@ -7,8 +7,8 @@ class Spot {
     param_noise = random(10000.0);
     position_noise_x = random(10000.0);
     position_noise_y = random(10000.0);
-    increment_noise = 0.01;
-    increment_noise_position = 0.001;
+    increment_noise = 0.04;
+    increment_noise_position = 0.005;
     number_of_vertex = (int)random(3, 6);
   }
 
