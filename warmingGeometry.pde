@@ -1,5 +1,7 @@
+PGraphics canvas;
+
 class Spot {
-  Spot(float _x, float _y, int _c, float _r) {
+  Spot(PGraphics _canvas, float _x, float _y, int _c, float _r) {
     x = x_init = _x;
     y = y_init = _y;
     c = _c;
@@ -10,6 +12,7 @@ class Spot {
     increment_noise = 0.04;
     increment_noise_position = 0.005;
     number_of_vertex = (int)random(3, 6);
+    canvas = _canvas;
   }
 
   void draw()
@@ -20,20 +23,20 @@ class Spot {
     x = x_init + 100*noise(position_noise_x);
     y = y_init + 100*noise(position_noise_y);
 
-    noStroke();
-    fill(c, 200);
-    beginShape();
+    canvas.noStroke();
+    canvas.fill(c, 200);
+    canvas.beginShape();
     for ( float angle = 0.0; angle < 360.0; angle = angle + 360/number_of_vertex ) {
       float circle_noise = 20*noise(
         param_noise+cos(radians(angle)), 
         param_noise+sin(radians(angle))
         );
 
-      vertex(
+      canvas.vertex(
         x + (r+circle_noise)*cos(radians(angle)), 
         y + (r+circle_noise)*sin(radians(angle)));
     }
-    endShape();
+    canvas.endShape();
   }
 
   float x;
@@ -48,23 +51,37 @@ class Spot {
   float increment_noise;
   float increment_noise_position;
   int number_of_vertex;
+  PGraphics canvas;
 };
 
 class WarmingGeometry {
   WarmingGeometry(int _n, float _r_min, float _r_max) {
     int[] c = new int[]{#3C88A6, #C6D4C8, #F2DC9B, #CB862C, #D99C9C};
+    canvas = createGraphics(width, height, P2D);
     spot = new Spot[_n];
     for ( int i = 0; i < spot.length; i++ ) {
-      spot[i] = new Spot(random(width), random(height), c[int(random(c.length))], random(_r_min, _r_max));
+      spot[i] = new Spot(canvas, random(width), random(height), c[int(random(c.length))], random(_r_min, _r_max));
     }
   }
-  void draw() {
-    background(#F2E4DC);
+  void update()
+  {
+    canvas.beginDraw();
+    canvas.background(#F2E4DC);
     //background(200,200,200,5);
-    
+
     for ( int i = 0; i < spot.length; i++ ) {
       spot[i].draw();
     }
+    canvas.endDraw();
   }
+  void draw() {
+    draw(0, 0, width, height);
+  }
+  void draw( int _x, int _y, int _w, int _h)
+  {
+    update();
+    image(canvas, _x, _y, _w, _h);
+  }
+  PGraphics canvas;
   Spot spot[];
 };
