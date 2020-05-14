@@ -9,8 +9,8 @@ class Spot {
     param_noise = random(10000.0);
     position_noise_x = random(10000.0);
     position_noise_y = random(10000.0);
-    increment_noise = 0.04;
-    increment_noise_position = 0.005;
+    increment_noise = 0.001;
+    increment_noise_position = 0.002;
     number_of_vertex = (int)random(3, 6);
     canvas = _canvas;
   }
@@ -20,14 +20,14 @@ class Spot {
     param_noise = param_noise+increment_noise;
     position_noise_x += increment_noise_position;
     position_noise_y += increment_noise_position;
-    x = x_init + 100*noise(position_noise_x);
-    y = y_init + 100*noise(position_noise_y);
+    x = x_init + 0.5*height*noise(position_noise_x);
+    y = y_init + 0.5*height*noise(position_noise_y);
 
     canvas.noStroke();
     canvas.fill(c, 200);
     canvas.beginShape();
     for ( float angle = 0.0; angle < 360.0; angle = angle + 360/number_of_vertex ) {
-      float circle_noise = 20*noise(
+      float circle_noise = 0.5*height*noise(
         param_noise+cos(radians(angle)), 
         param_noise+sin(radians(angle))
         );
