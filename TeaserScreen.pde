@@ -1,6 +1,8 @@
 WarmingGeometry wg;
 NoiseLines nls;
 PastelStripes ps;
+Template template;
+
 PFont f;
 
 void setup()
@@ -9,6 +11,7 @@ void setup()
   wg = new WarmingGeometry(10, 40, 280);
   nls = new NoiseLines(12, 5);
   ps = new PastelStripes(25);
+  template = new Template();
 
   size(1280, 720, P2D);
   //fullScreen(P2D,1); // number of display
@@ -18,7 +21,7 @@ void setup()
   textFont(f); // 読み込んだフォント f を表示用テキストフォントに変更
   textLeading(font_size);
 }
-int size_of_effect = 3;
+int size_of_effect = 4;
 
 
 String title = "";
@@ -34,7 +37,8 @@ void draw()
   case -1: // Thumnail viewer
     background(0);
     drawThumbnails(3);
-    break;
+    return;
+
   case 0:
     wg.draw();
     fill(100);
@@ -47,10 +51,13 @@ void draw()
     ps.draw();
     fill(100);
     break;
+  case 3:
+    template.draw();
+    fill(255);
+    break;
   }
 
 
-  if ( kind_of_effect == -1 )return;
   if ( !flg_begin_workshop ) {
     drawClock(width/2, height/4);
     // Draw Typed Message
@@ -86,7 +93,7 @@ void keyPressed()
       }
     } else if (keyCode == 97) { // F1
       flg_begin_workshop = !flg_begin_workshop;
-    } else if ( keyCode == 106) {
+    } else if ( keyCode == 106) { //F10: go to thumbnail mode
       kind_of_effect = -1;
     } else {
       title = title + str(key);
@@ -100,10 +107,16 @@ void drawThumbnails(int _number_of_div) {
   int margin_y = 20;
   int grid_w = (width-(number_of_div+1)*margin_x)/number_of_div;
   int grid_h = (int)(grid_w*(9.0/16.0));
-  PGraphics canvas[] = {wg.canvas, nls.canvas, ps.canvas};
+  
+  //////////////////
+  PGraphics canvas[] = {wg.canvas, nls.canvas, ps.canvas, template.canvas};
+  
   wg.update();
   nls.update();
   ps.update();
+  template.update();
+  //////////////////
+  
   // margin , margin+grid_w+margin, margin+grid_w+margin+grid_w+margin
   for ( int i = 0; i < canvas.length; i++ ) {
     Rectangle r = new Rectangle(margin_x+(i%number_of_div)*(grid_w+margin_x), 
@@ -116,13 +129,13 @@ void drawThumbnails(int _number_of_div) {
       grid_w, grid_h);
 
     if ( r.inside(mouseX, mouseY) ) {
-      fill(200,150);
+      fill(200, 150);
       rect(-5+margin_x+(i%number_of_div)*(grid_w+margin_x), 
         -5+margin_y+(grid_h+margin_y)*(i/number_of_div), 
         grid_w+10, grid_h+10);
-        if( mousePressed ){          
-          kind_of_effect = i;
-        }
+      if ( mousePressed ) {          
+        kind_of_effect = i;
+      }
     }
   }
 }
